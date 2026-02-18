@@ -16,8 +16,7 @@
 
             </MenuItem>
             <MenuItem x:Name="mnuView" Header="{DynamicResource ResourceKey=menu.View}">
-                <Label>A sla, só vai tomar no seu cu</Label>
-                <!-- KKKKKKKKKKKKKKKKKKK -->
+                <!-- Lol -->
             </MenuItem>
         </Menu>
 

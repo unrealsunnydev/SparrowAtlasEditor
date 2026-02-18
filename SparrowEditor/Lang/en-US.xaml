@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<sys:String x:Key="app.Title">Editor de Animação: Sparrow Atlas</sys:String>
+
+
+	<sys:String x:Key="menu.File">File</sys:String>
+	<sys:String x:Key="menu.Edit">Edit</sys:String>
+	<sys:String x:Key="menu.View">Veiw</sys:String>
+
+	<sys:String x:Key="menu.item.Open">Open</sys:String>
+	<sys:String x:Key="menu.item.Save">Save</sys:String>
+
+	<sys:String x:Key="button.ZoomP">Zoom +</sys:String>
+	<sys:String x:Key="button.ZoomM">Zoom -</sys:String>
+
+	<sys:String x:Key="panel.CommomData">Common Data</sys:String>
+
+	<sys:String x:Key="open.file.SparrowFilter">SparrowAtlas Files</sys:String>
+	<sys:String x:Key="open.file.SparrowTitle">Open Sparrow Atlas</sys:String>
+
+	<sys:String x:Key="sparrow.info.xPos">X</sys:String>
+	<sys:String x:Key="sparrow.info.yPos">Y</sys:String>
+	<sys:String x:Key="sparrow.info.Width">Width</sys:String>
+	<sys:String x:Key="sparrow.info.Height">Height</sys:String>
+</ResourceDictionary>

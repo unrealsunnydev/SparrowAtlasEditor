@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows;
 
-namespace SparrowEditor.Lang
+namespace SparrowEditor
 {
 	public static class Language
 	{
@@ -12,29 +12,29 @@ namespace SparrowEditor.Lang
 
 		public static void Load()
 		{
-			langs = new ResourceDictionary();
-
 			Application.Current.Resources.MergedDictionaries.Clear();
 
 			try
 			{
 				// Load language files by Current UI Culture language file name.
 				System.Diagnostics.Debug.WriteLine($"Loaded resources! [{CultureInfo.CurrentUICulture}]");
-				Application.Current.Resources.MergedDictionaries.Add(
-					new ResourceDictionary
-					{
-						Source = new Uri($"Lang/{CultureInfo.CurrentUICulture}.xaml", UriKind.Relative)
-					});
+				var dict = new ResourceDictionary
+				{
+					Source = new Uri($"Lang/{CultureInfo.CurrentUICulture}.xaml", UriKind.Relative)
+				};
+				Application.Current.Resources.MergedDictionaries.Add(dict);
+				langs = dict;
 			}
 			catch
 			{
 				// Fallback: Use one language selected file.
 				System.Diagnostics.Debug.WriteLine($"Failed to load resources in current UI Culture! [{CultureInfo.CurrentUICulture}]");
-				Application.Current.Resources.MergedDictionaries.Add(
-					new ResourceDictionary
-					{
-						Source = new Uri("Lang/pt-BR.xaml", UriKind.Relative) // pt-BR by now, cause its my main language lol
-					});
+				var dict = new ResourceDictionary
+				{
+					Source = new Uri("Lang/pt-BR.xaml", UriKind.Relative) // pt-BR by now, cause its my main language lol
+				};
+				Application.Current.Resources.MergedDictionaries.Add(dict);
+				langs = dict;
 			}
 			
 		}
@@ -48,24 +48,50 @@ namespace SparrowEditor.Lang
 		/// <returns></returns>
 		public static string GetString(string key, params object[] value)
 		{
-			key = key.Trim();
+			key = key?.Trim();
 
 			if (String.IsNullOrEmpty(key))
 			{
 				return "[!]";
 			}
-			else if (!langs.Contains(key) || langs == null)
+
+			// If langs was never set, try to find the language dictionary in merged dictionaries
+			if (langs == null)
 			{
-				System.Diagnostics.Debug.WriteLine($"ERROR: The current language doesn't have the spected key ({key}) or dictionary is null.");
+				var merged = Application.Current?.Resources?.MergedDictionaries;
+				if (merged != null)
+				{
+					foreach (ResourceDictionary rd in merged)
+					{
+						if (rd?.Source != null && rd.Source.OriginalString.StartsWith("Lang/", StringComparison.OrdinalIgnoreCase))
+						{
+							langs = rd;
+							break;
+						}
+					}
+
+					if (langs == null && merged.Count > 0)
+					{
+						langs = merged[0];
+					}
+				}
+			}
+
+			if (langs == null || !langs.Contains(key))
+			{
+				System.Diagnostics.Debug.WriteLine($"ERROR: The current language doesn't have the expected key ({key}) or dictionary is null.");
 				return $"[! {key} !]";
 			}
 
-			if (value != null || value?.Length > 0)
+			var obj = langs[key];
+			var str = obj as string ?? obj?.ToString() ?? $"[! {key} !]";
+
+			if (value != null && value.Length > 0)
 			{
-				return String.Format((string)langs[key], value);
+				return String.Format(str, value);
 			}
 
-			return key;
+			return str;
 		}
 	}
 }

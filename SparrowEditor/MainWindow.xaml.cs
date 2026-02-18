@@ -14,51 +14,53 @@ using System.Xml.Linq;
 
 namespace SparrowEditor
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
+			InitializeComponent();
+		}
 
-        private void mniOpen_Click(object sender, RoutedEventArgs e)
-        {
+		private void mniOpen_Click(object sender, RoutedEventArgs e)
+		{
 
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Filter = $"{SparrowEditor.Lang.Language.GetString("open.file.SparrowFilter")} (*.xml)|*.xml",
-                Title = $"{SparrowEditor.Lang.Language.GetString("open.file.SparrowTitle")}"
-            };
+			OpenFileDialog dialog = new OpenFileDialog
+			{
+				Filter = $"{SparrowEditor.Language.GetString("open.file.SparrowFilter")} (*.xml)|*.xml",
+				Title = $"{SparrowEditor.Language.GetString("open.file.SparrowTitle")}"
+			};
 
-            if (dialog.ShowDialog() == true)
-            {
-                string path = dialog.FileName;
+			if (dialog.ShowDialog() == true)
+			{
+				string path = dialog.FileName;
 
-                XDocument doc = XDocument.Load(path);
+				XDocument doc = XDocument.Load(path);
 
-                if (doc.Root == null)
-                {
-                    MessageBox.Show("ERROR: The choosen XML data contains invalid root data.");
-                    return;
-                }
+				if (doc.Root == null)
+				{
+					MessageBox.Show("ERROR: The choosen XML data contains invalid root data.");
+					return;
+				}
 
-                SparrowFormat.x = Convert.ToDouble(doc.Root.Element("x")?.Value);
-                SparrowFormat.y = Convert.ToDouble(doc.Root.Element("y")?.Value);
-                SparrowFormat.width = Convert.ToDouble(doc.Root.Element("width")?.Value);
-                SparrowFormat.height = Convert.ToDouble(doc.Root.Element("height")?.Value);
-                SparrowFormat.flipX = Convert.ToBoolean(doc.Root.Element("flipX")?.Value);
+				SparrowFormat.x = Convert.ToDouble(doc.Root.Element("x")?.Value);
+				SparrowFormat.y = Convert.ToDouble(doc.Root.Element("y")?.Value);
+				SparrowFormat.width = Convert.ToDouble(doc.Root.Element("width")?.Value);
+				SparrowFormat.height = Convert.ToDouble(doc.Root.Element("height")?.Value);
+				SparrowFormat.flipX = Convert.ToBoolean(doc.Root.Element("flipX")?.Value);
 
-
-                System.Diagnostics.Debug.WriteLine($"X: {SparrowFormat.x}");
-                System.Diagnostics.Debug.WriteLine($"Y: {SparrowFormat.y}");
-                System.Diagnostics.Debug.WriteLine($"Width: {SparrowFormat.width}");
-                System.Diagnostics.Debug.WriteLine($"Height: {SparrowFormat.height}");
-                System.Diagnostics.Debug.WriteLine($"FlipX: {SparrowFormat.flipX}");
-                System.Diagnostics.Debug.WriteLine($"FlipY: {SparrowFormat.flipY}");
-            }
-        }
-    }
+				#if DEBUG
+				System.Diagnostics.Debug.WriteLine($"X: {SparrowFormat.x}");
+				System.Diagnostics.Debug.WriteLine($"Y: {SparrowFormat.y}");
+				System.Diagnostics.Debug.WriteLine($"Width: {SparrowFormat.width}");
+				System.Diagnostics.Debug.WriteLine($"Height: {SparrowFormat.height}");
+				System.Diagnostics.Debug.WriteLine($"Rotated: {SparrowFormat.rotated}");
+				System.Diagnostics.Debug.WriteLine($"FlipX: {SparrowFormat.flipX}");
+				System.Diagnostics.Debug.WriteLine($"FlipY: {SparrowFormat.flipY}");
+				#endif
+			}
+		}
+	}
 }
