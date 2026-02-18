@@ -1,0 +1,8 @@
+﻿<Application x:Class="SparrowEditor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SparrowEditor"
+             StartupUri="MainWindow.xaml" Activated="Application_Activated" Startup="Application_Startup">
+    <Application.Resources>
+    </Application.Resources>
+</Application>
