@@ -7,19 +7,19 @@ namespace SparrowEditor.Sparrow
 	/// <summary>
 	/// Main Head of parsing SparrowAtlas elements and nodes
 	/// </summary>
-	class SparrowFormat
-	{
+	class SparrowFormat {
 		/*
 			BASE DATA SOURCE!
 
-		```
+			```
+			<xml ...>
 			<TextureAtlas imagePath="spritesheet.png">
 				<SubTexture name="BF HEY!!0000" x="1150" y="0" width="395" height="416" pivotX="-298.8" pivotY="206.95" frameX="0" frameY="0" frameWidth="415" frameHeight="418"/>
 			</TextureAtlas>
-		```
+			```
 
-		NOTE: imagePath seems not useful at all, and Idk where it is used lol
-		Since most engines ignores this element btw
+			NOTE: imagePath seems not useful at all, and Idk where it is used lol
+			Since most engines ignores this element btw
 		*/
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace SparrowEditor.Sparrow
 		public static double height = 0;
 
 		/// <summary>
-		/// 90º Rotated Sprite
+		/// 90° Rotated Sprite
 		/// </summary>
 		public static bool rotated = false;
 
